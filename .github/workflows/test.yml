@@ -20,4 +20,4 @@ jobs:
 
 
       - name: Run tests
-        run: python3 TestHarness.py
+        run: python3 Code/TestHarness.py
