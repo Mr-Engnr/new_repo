@@ -1,0 +1,22 @@
+name: Test Reliable Transport
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          if Test-Path "requirements.txt"; then pip install -r requirements.txt; else echo "No requirements.txt found"; fi
+
+      - name: Run tests
+        run: python3 TestHarness.py
