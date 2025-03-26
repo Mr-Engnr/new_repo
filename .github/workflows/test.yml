@@ -1,16 +1,22 @@
-name: Docker Test
+name: Docker Test Harness
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  docker-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Docker
+        run: |
+          docker --version  # Verify Docker installation
+          
       - name: Build Docker Image
-        run: docker build -t test-harness .
+        run: |
+          docker build -t my-test-image .
 
-      - name: Run Container
-        run: docker run --rm test-harness
+      - name: Run Test Harness in Container
+        run: |
+          docker run --rm my-test-image ./test_harness
