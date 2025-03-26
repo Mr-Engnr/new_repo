@@ -1,4 +1,4 @@
-name: Test Reliable Transport
+name: Docker Test
 
 on: [push, pull_request]
 
@@ -6,27 +6,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.12"
+      - name: Build Docker Image
+        run: docker build -t test-harness .
 
-      - name: Debug file structure
-        run: ls -R
-
-      - name: Check for reliable_transport.py
-        run: |
-          if [ ! -f reliable_transport.py ]; then
-            echo "reliable_transport.py is missing"
-            exit 1
-          fi
-
-      - name: Install dependencies
-        run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found"; fi
-
-      - name: Run tests
-        run: python3 Code/TestHarness.py
+      - name: Run Container
+        run: docker run --rm test-harness
