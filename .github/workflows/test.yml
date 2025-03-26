@@ -23,12 +23,8 @@ jobs:
         run: |
           docker build -t netcen-pa2-image .
 
-      - name: Ensure test_harness is executable
-        run: |
-          chmod +x Code/test_harness
-
-      - name: Run Tests Inside Container
+      - name: Run TestHarness.py Inside Container
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/Code:/home/netcen_pa2 \
-            netcen-pa2-image /home/netcen_pa2/test_harness
+            netcen-pa2-image python3 /home/netcen_pa2/TestHarness.py
