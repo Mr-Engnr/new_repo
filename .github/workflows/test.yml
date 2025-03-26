@@ -16,11 +16,17 @@ jobs:
 
       - name: Debug file structure
         run: ls -R
-        
+
+      - name: Check for reliable_transport.py
+        run: |
+          if [ ! -f reliable_transport.py ]; then
+            echo "reliable_transport.py is missing"
+            exit 1
+          fi
+
       - name: Install dependencies
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; else echo "No requirements.txt found"; fi
-
 
       - name: Run tests
         run: python3 Code/TestHarness.py
